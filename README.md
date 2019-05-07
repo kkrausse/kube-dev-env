@@ -2,6 +2,10 @@
 
 taken some from:
 https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-cluster-using-kubeadm-on-ubuntu-18-04
+
+also a good one:
+https://blog.laputa.io/kubernetes-flannel-networking-6a1cb1f8ec7c
+
 #### Step 1: install prereqs
 
 - install vagrant, virtualbox, and ansible

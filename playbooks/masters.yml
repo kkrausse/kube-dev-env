@@ -26,10 +26,15 @@
         remote_src: yes
         owner: ubuntu
 
+    - name: upload kube-flannel.yml to host
+      copy:
+        src: ../kube-flannel.yml
+        dest: /home/ubuntu/kube-flannel.yml
+
     - name: install Pod network
       become: yes
       become_user: ubuntu
-      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml >> pod_network_setup.txt
+      shell: kubectl apply -f /home/ubuntu/kube-flannel.yml >> pod_network_setup.txt
       args:
         chdir: $HOME
 #        creates: pod_network_setup.txt
