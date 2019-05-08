@@ -182,6 +182,9 @@ spec:
         - --ip-masq
         - --kube-subnet-mgr
 # NEEDED for VAGRANT maybe change to --iface=enp0s8 if this isnt working
+# consider switching to this:
+# --iface-regex="": regex expression to match the first interface to use (IP or name) for inter-host communication. If unspecified, will default to the interface for the default route on the machine. This can be specified multiple times to check each regex in order. Returns the first match found. This option is superseded by the iface option and will only be used if nothing matches any option specified in the iface options.
+
         - --iface=enp0s8
         resources:
           requests:

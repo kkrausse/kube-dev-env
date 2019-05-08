@@ -34,6 +34,18 @@
        name: kubeadm=1.14.0-00
        state: present
 
+   - name: create default directory
+     become: yes
+     file:
+       path: /etc/default
+       state: directory
+       mode: 0755
+
+   - name: set the kubelet node port in the default
+     copy:
+       content: "KUBELET_EXTRA_ARGS=--node-ip={{ansible_enp0s8.ipv4.address}}"
+       dest: /etc/default/kubelet
+
 - hosts: masters
   become: yes
   tasks:
