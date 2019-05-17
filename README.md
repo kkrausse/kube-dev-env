@@ -23,7 +23,7 @@ sudo apt install ansible
 # add a tap interface to connect all nodes in the network and name it tap0
 # all the vms will create a bridge to this interface and thus be connected
 # the name "tap0" is important since its used in the vagrantfile
-sudo ip tuntap add name tap0 made tap
+sudo ip tuntap add name tap0 mode tap
 # set the ip that the host will use for the tap interface
 sudo ip addr add 192.168.99.1 dev tap0
 # put the tap interface up
