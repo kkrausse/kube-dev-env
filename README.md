@@ -6,7 +6,7 @@ https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-clus
 also a good one:
 https://blog.laputa.io/kubernetes-flannel-networking-6a1cb1f8ec7c
 
-#### Step 1: install prereqs
+### Step 1: Install prerequisites
 
 - Install Vagrant, VirtualBox, and Ansible
 ```
@@ -15,7 +15,7 @@ sudo apt-get install vagrant
 sudo apt install ansible
 ```
 
-#### Step 2: set up network
+### Step 2: Set up network
 
 - Since Vagrant with VirtualBox failed to set up a private network, I will
   do this manually by running the following:
@@ -32,7 +32,7 @@ sudo ip link set dev tap0 up
 sudo ip route add 192.168.99.0/24 dev tap0
 ```
 
-### Step 3: set up cluster
+### Step 3: Set up cluster
 
 Open the Vagrantfile and set N to the number of worker nodes you want
 
@@ -40,7 +40,7 @@ Run `vagrant up` to set up the nodes and then `vagrant provision` to set up
 the kubernetes cluster. This uses the ansible playbooks to configure all the
 nodes.
 
-### Step 4: interracting with the cluster
+### Step 4: Interracting with the cluster
 
 To make things easier, you can set the node names in your `/etc/hosts` file.
 I added the following lines:
@@ -61,7 +61,7 @@ Alternatively, you can just place the `config` file in your `~/.kube/` directory
 
 Run `kubectl get nodes` to see that all your nodes are ready to roll
 
-### Step 5: add persistent volume claim
+### Step 5: Add persistent volume claim
 
 To do this I added the following line to `/etc/exports`:
 
@@ -72,7 +72,7 @@ then ran `sudo exportfs -a` to update the nfs server that was already running
 
 Then did `kubectl apply -f pv.yml` to put that on there
 
-#### vocabulary
+#### Vocabulary
 
 - when I say "host machine," I am talking about the machine that vagrant and
   and virtual box are installed on. This is opposed to "guest machine" which
