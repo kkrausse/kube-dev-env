@@ -8,11 +8,16 @@ https://blog.laputa.io/kubernetes-flannel-networking-6a1cb1f8ec7c
 
 #### Step 1: install prereqs
 
-- install vagrant, virtualbox, and ansible
+- Install Vagrant, VirtualBox, and Ansible
+```
+sudo apt-get install virtualbox
+sudo apt-get install vagrant
+sudo apt install ansible
+```
 
 #### Step 2: set up network
 
-- since vagrant with virtual box failed to set up a private network I will
+- Since Vagrant with VirtualBox failed to set up a private network, I will
   do this manually by running the following:
 ```
 # add a tap interface to connect all nodes in the network and name it tap0
