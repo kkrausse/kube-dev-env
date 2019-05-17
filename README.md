@@ -32,8 +32,8 @@ sudo ip link set dev tap0 up
 sudo ip route add 192.168.99.0/24 dev tap0
 ```
 
-If you run the command `route`, you should see an additional entry in your Kernel IP
-routing table:
+To verify you have set up the tap interface, you can run the command `route`. 
+You should see an additional entry in your Kernel IP routing table:
 ```
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
