@@ -42,10 +42,11 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 ### Step 3: Set up cluster
 
-Open the Vagrantfile and set N to the number of worker nodes you want
+If you have not already, clone this repository.
+Open `Vagrantfile` and set the variable `N` to the number of worker nodes you want
 
 Run `vagrant up` to set up the nodes and then `vagrant provision` to set up
-the kubernetes cluster. This uses the ansible playbooks to configure all the
+the kubernetes cluster. This uses the Ansible Playbooks to configure all the
 nodes.
 
 ### Step 4: Interracting with the cluster
