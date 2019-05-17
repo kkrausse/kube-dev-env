@@ -20,6 +20,12 @@ Vagrant.configure("2") do |config|
       # Set up the hostname
       node.vm.hostname = "node#{node_id}"
 
+      # provision enough vms
+      node.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+      end
+
       # Only execute once the Ansible provisioner,
       # when all the machines are up and ready.
       # this allows ansible to provision multiple nodes in parallel

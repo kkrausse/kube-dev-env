@@ -1,0 +1,22 @@
+# this is an expamle persistent volume
+# I manually attatched this the cluster with `kubectl apply -f pv.yml` so
+# the Persistent volume claims made by testing jupyterhub would be matched to
+# this volume (see readme)
+#
+# Later on will need to have a Storage Class provisioner so these persistant
+# volumes can be provisioned dynamically.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv-shared2
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    path: /home/kkrausse/projects/helm/spare
+    server: 192.168.99.1
+    readOnly: false

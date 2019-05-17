@@ -56,8 +56,29 @@ Alternatively, you can just place the `config` file in your `~/.kube/` directory
 
 Run `kubectl get nodes` to see that all your nodes are ready to roll
 
+### Step 5: add persistent volume claim
+
+To do this I added the following line to `/etc/exports`:
+
+`/home/kkrausse/projects/vag/shared *(rw,fsid=0,async,no_subtree_check,no_auth_nlm,insecure,no_root_squash)`
+
+where `/home/kkrausse/projects/vag/shared` was the directory to mount for the nfs volume
+then ran `sudo exportfs -a` to update the nfs server that was already running
+
+Then did `kubectl apply -f pv.yml` to put that on there
+
 #### vocabulary
 
 - when I say "host machine," I am talking about the machine that vagrant and
   and virtual box are installed on. This is opposed to "guest machine" which
   is one that is virtual.
+
+
+# TODO
+
+- change the workers' ips so they are in the kubernetes CIDR
+  (10.244.0.0/16 in this case). This should solve the issue about pods on
+  other nodes not being found without having to change the default kubelet args
+  in `/etc/default/kubelet`
+  - nvm this is wrong. Only the pod-cider from within the node be a sub-cidr
+    of the cluster-wide one. doesnt matter with the node ip
