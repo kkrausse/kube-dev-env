@@ -83,15 +83,20 @@ While in the root directory of this repository, run
 ```
 helm install --name nfs-client-release stable/nfs-client-provisioner -f nfs-client-vals.yml 
 ```
-After this you should be good to run [jupyterhub](
+After this you should be good to run the jupyterhub helm [deployment](
 https://zero-to-jupyterhub.readthedocs.io/en/latest/index.html) on this cluster
+
+For reference this helm chart is based on this [repo](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client).
+Code in `nfs-client/cmd/nfs-client-provisioner` implements the kubernetes volume provisioner [interface](
+https://github.com/kubernetes-sigs/sig-storage-lib-external-provisioner/blob/master/controller/volume.go)
+and the helm chart has a deployment that makes a pod that runs this one file
+and creates a storage class that uses the provisioner.
 
 
 delete the nfs client provisioner with:
 ```
 helm delete nfs-client-release --purge
 ```
-
 
 ### vocabulary
 
