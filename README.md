@@ -6,19 +6,24 @@ https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-clus
 also a good one:
 https://blog.laputa.io/kubernetes-flannel-networking-6a1cb1f8ec7c
 
-#### Step 1: install prereqs
+### Step 1: Install prerequisites
 
-- install vagrant, virtualbox, and ansible
+- Install Vagrant, VirtualBox, and Ansible
+```
+sudo apt-get install virtualbox
+sudo apt-get install vagrant
+sudo apt install ansible
+```
 
-#### Step 2: set up network
+### Step 2: Set up network
 
-- since vagrant with virtual box failed to set up a private network I will
+- Since Vagrant with VirtualBox failed to set up a private network, I will
   do this manually by running the following:
 ```
 # add a tap interface to connect all nodes in the network and name it tap0
 # all the vms will create a bridge to this interface and thus be connected
 # the name "tap0" is important since its used in the vagrantfile
-sudo ip tuntap add name tap0 made tap
+sudo ip tuntap add name tap0 mode tap
 # set the ip that the host will use for the tap interface
 sudo ip addr add 192.168.99.1 dev tap0
 # put the tap interface up
@@ -27,15 +32,24 @@ sudo ip link set dev tap0 up
 sudo ip route add 192.168.99.0/24 dev tap0
 ```
 
-### Step 3: set up cluster
+To verify you have set up the tap interface, you can run the command `route`. 
+You should see an additional entry in your Kernel IP routing table:
+```
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.99.0    0.0.0.0         255.255.255.0   U     0      0        0 tap0
+```
 
-Open the Vagrantfile and set N to the number of worker nodes you want
+### Step 3: Set up cluster
+
+If you have not already, clone this repository.
+Open `Vagrantfile` and set the variable `N` to the number of worker nodes you want
 
 Run `vagrant up` to set up the nodes and then `vagrant provision` to set up
-the kubernetes cluster. This uses the ansible playbooks to configure all the
+the kubernetes cluster. This uses the Ansible Playbooks to configure all the
 nodes.
 
-### Step 4: interracting with the cluster
+### Step 4: Interracting with the cluster
 
 To make things easier, you can set the node names in your `/etc/hosts` file.
 I added the following lines:
@@ -56,7 +70,7 @@ Alternatively, you can just place the `config` file in your `~/.kube/` directory
 
 Run `kubectl get nodes` to see that all your nodes are ready to roll
 
-### Step 5: add default storage class
+### Step 5: Add default storage class
 
 This will make it so persistant volume claims are automatically satisfied by
 [dynamically provisioned](
@@ -67,7 +81,7 @@ In this case, I am running an nfs server on the host and using the [nfs client](
 https://github.com/helm/charts/tree/master/stable/nfs-client-provisioner)
 external provisioner.
 
-##### run nfs on the host os
+##### Run NFS on the host OS
 
 Run `sudo apt install nfs-kernel-server` to run the nfs server on the host and
 add the following line to `/etc/exports`:
@@ -77,7 +91,7 @@ add the following line to `/etc/exports`:
 where `/home/kkrausse/projects/vag/shared` was the directory to mount for the nfs volume
 then ran `sudo exportfs -a` to update the nfs server that was already running
 
-##### Setting up the nfs client external provisioner
+##### Setting up the NFS client external provisioner
 
 While in the root directory of this repository, run
 ```
@@ -92,13 +106,12 @@ https://github.com/kubernetes-sigs/sig-storage-lib-external-provisioner/blob/mas
 and the helm chart has a deployment that makes a pod that runs this one file
 and creates a storage class that uses the provisioner.
 
-
-delete the nfs client provisioner with:
+Delete the nfs client provisioner with:
 ```
 helm delete nfs-client-release --purge
 ```
 
-### vocabulary
+### Vocabulary
 
 - when I say "host machine," I am talking about the machine that vagrant and
   and virtual box are installed on. This is opposed to "guest machine" which
