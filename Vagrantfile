@@ -44,7 +44,6 @@ Vagrant.configure("2") do |config|
           ansible.extra_vars = {
             "master_node_ip" => ip_prefix + "20"
           }
-
         end
       end
     end # config.vm...
